@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccessBot - Microphone Permission</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+      max-width: 500px;
+    }
+    .icon { font-size: 64px; margin-bottom: 20px; }
+    h1 { color: #4CAF50; margin-bottom: 12px; font-size: 24px; }
+    p { color: #888; margin-bottom: 24px; line-height: 1.6; }
+    .btn {
+      padding: 14px 40px;
+      border: none;
+      border-radius: 12px;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #43A047; }
+    .btn:disabled { background: #333; cursor: not-allowed; }
+    .status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+    .status.success { display: block; background: rgba(76,175,80,0.15); color: #4CAF50; }
+    .status.error { display: block; background: rgba(244,67,54,0.15); color: #f44336; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">🎤</div>
+    <h1>AccessBot Microphone Access</h1>
+    <p>AccessBot needs microphone access to hear your voice commands and help you navigate the web.</p>
+    <button class="btn" id="grant-btn">Allow Microphone</button>
+    <div class="status" id="status"></div>
+  </div>
+  <script src="permissions.js"></script>
+</body>
+</html>

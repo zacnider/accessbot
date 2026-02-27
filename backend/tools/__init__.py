@@ -1,0 +1,89 @@
+from .browser_actions import (
+    click_element,
+    scroll_page,
+    type_text,
+    navigate_to,
+    go_back,
+    press_key,
+    focus_element,
+    select_option,
+    read_page_text,
+    tab_navigate,
+)
+from .page_analysis import get_page_summary, list_interactive_elements, find_element
+from .tab_management import (
+    list_all_tabs,
+    switch_to_tab,
+    close_tab,
+    open_new_tab,
+    zoom_page,
+)
+from .advanced_actions import (
+    right_click,
+    double_click,
+    hover_element,
+    clipboard_action,
+    find_on_page,
+    navigate_by_element_type,
+    get_page_structure,
+    read_selected_text,
+    keyboard_shortcut,
+    drag_and_drop,
+    search_web,
+    move_mouse,
+    scroll_to_element,
+)
+from .settings import (
+    change_speech_rate,
+    change_language,
+    toggle_setting,
+)
+from .smart_awareness import (
+    detect_page_type,
+    get_contextual_suggestions,
+)
+
+__all__ = [
+    # Basic browser actions
+    "click_element",
+    "scroll_page",
+    "type_text",
+    "navigate_to",
+    "go_back",
+    "press_key",
+    "focus_element",
+    "select_option",
+    "read_page_text",
+    "tab_navigate",
+    # Page analysis
+    "get_page_summary",
+    "list_interactive_elements",
+    "find_element",
+    # Tab management
+    "list_all_tabs",
+    "switch_to_tab",
+    "close_tab",
+    "open_new_tab",
+    "zoom_page",
+    # Advanced actions
+    "right_click",
+    "double_click",
+    "hover_element",
+    "clipboard_action",
+    "find_on_page",
+    "navigate_by_element_type",
+    "get_page_structure",
+    "read_selected_text",
+    "keyboard_shortcut",
+    "drag_and_drop",
+    "search_web",
+    "move_mouse",
+    "scroll_to_element",
+    # Voice-controlled settings
+    "change_speech_rate",
+    "change_language",
+    "toggle_setting",
+    # Smart page awareness
+    "detect_page_type",
+    "get_contextual_suggestions",
+]

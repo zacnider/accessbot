@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccessBot</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="10" r="3" fill="currentColor"/>
+          <path d="M6 19c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>AccessBot</span>
+      </div>
+      <div class="status" id="status-indicator">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Disconnected</span>
+      </div>
+    </div>
+
+    <!-- Main Toggle -->
+    <button class="toggle-btn" id="toggle-btn">
+      <span class="toggle-icon" id="toggle-icon">&#9654;</span>
+      <span id="toggle-text">Start AccessBot</span>
+    </button>
+
+    <!-- Info Text -->
+    <p class="shortcut-info">
+      Keyboard shortcut: <kbd>Alt</kbd> + <kbd>A</kbd>
+    </p>
+
+    <!-- Transcript Area -->
+    <div class="transcript-area" id="transcript-area">
+      <div class="transcript-placeholder" id="transcript-placeholder">
+        Conversation will appear here...
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <details class="settings">
+      <summary>Settings</summary>
+      <div class="settings-body">
+        <label class="setting-item">
+          <span>Backend URL</span>
+          <input type="text" id="backend-url" placeholder="ws://localhost:8080/ws">
+        </label>
+        <label class="setting-item">
+          <span>Speech Rate</span>
+          <input type="range" id="speech-rate" min="0.5" max="2" step="0.1" value="1">
+          <span id="speech-rate-value">1.0x</span>
+        </label>
+      </div>
+    </details>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span>AccessBot v1.0.0</span>
+      <span>Gemini Live Agent Challenge</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

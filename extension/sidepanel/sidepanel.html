@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccessBot</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="panel">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-orb" id="logo-orb">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="10" r="3" fill="currentColor"/>
+            <path d="M6 19c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="header-info">
+          <h1 class="title">AccessBot</h1>
+          <span class="subtitle" id="status-text">Ready</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="status-badge" id="status-badge">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="connection-text">Offline</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Waveform Visualizer -->
+    <div class="visualizer-container" id="visualizer-container">
+      <canvas id="waveform-canvas" width="360" height="60"></canvas>
+      <div class="visualizer-label" id="visualizer-label">Press Start to begin</div>
+    </div>
+
+    <!-- Main Toggle -->
+    <button class="main-toggle" id="main-toggle" aria-label="Start AccessBot">
+      <div class="toggle-inner">
+        <svg class="toggle-icon play-icon" id="play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg class="toggle-icon stop-icon hidden" id="stop-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+        </svg>
+      </div>
+      <span class="toggle-text" id="toggle-text">Start AccessBot</span>
+      <span class="toggle-shortcut">Alt+A</span>
+    </button>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <button class="action-btn" id="btn-describe" title="Describe this page (Alt+S)" aria-label="Describe page">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/>
+        </svg>
+        <span>Describe</span>
+      </button>
+      <button class="action-btn" id="btn-read" title="Read page content" aria-label="Read page">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+        </svg>
+        <span>Read</span>
+      </button>
+      <button class="action-btn" id="btn-elements" title="List interactive elements" aria-label="List elements">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+        <span>Elements</span>
+      </button>
+      <button class="action-btn" id="btn-tabs" title="Manage tabs" aria-label="Manage tabs" id="btn-tabs">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="9"/>
+        </svg>
+        <span>Tabs</span>
+      </button>
+    </div>
+
+    <!-- Tabs Panel (hidden by default) -->
+    <div class="tabs-panel hidden" id="tabs-panel">
+      <div class="section-header">
+        <span>Open Tabs</span>
+        <button class="close-section" id="close-tabs" aria-label="Close tabs panel">&times;</button>
+      </div>
+      <div class="tabs-list" id="tabs-list">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+
+    <!-- Transcript Area -->
+    <div class="transcript-area" id="transcript-area">
+      <div class="transcript-empty" id="transcript-empty">
+        <div class="empty-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <p>Your conversation will appear here</p>
+        <p class="empty-hint">Start AccessBot and speak to navigate the web</p>
+      </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+      <button class="settings-toggle" id="settings-toggle" aria-label="Toggle settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        <span>Settings</span>
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="settings-body hidden" id="settings-body">
+        <div class="setting-row">
+          <label for="api-key">Gemini API Key</label>
+          <div class="api-key-group">
+            <input type="password" id="api-key" placeholder="Enter your Gemini API key" spellcheck="false" autocomplete="off">
+            <button class="toggle-visibility" id="toggle-key-visibility" title="Show/hide key" aria-label="Toggle key visibility">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <small class="setting-hint">Get your key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></small>
+        </div>
+        <div class="setting-row">
+          <label for="speech-rate">Speech Rate</label>
+          <div class="range-group">
+            <input type="range" id="speech-rate" min="0.5" max="3" step="0.1" value="1">
+            <span class="range-value" id="speech-rate-value">1.0x</span>
+          </div>
+        </div>
+        <div class="setting-row">
+          <label for="sound-effects">Sound Effects</label>
+          <label class="switch">
+            <input type="checkbox" id="sound-effects" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <label for="auto-describe">Auto-describe Pages</label>
+          <label class="switch">
+            <input type="checkbox" id="auto-describe" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <label for="verbosity">Verbosity</label>
+          <select id="verbosity">
+            <option value="brief">Brief</option>
+            <option value="normal" selected>Normal</option>
+            <option value="detailed">Detailed</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label for="language">Language</label>
+          <select id="language">
+            <option value="auto">Auto-detect</option>
+            <option value="tr">Turkish</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+            <option value="ar">Arabic</option>
+            <option value="ru">Russian</option>
+            <option value="zh">Chinese</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="pt">Portuguese</option>
+            <option value="it">Italian</option>
+            <option value="nl">Dutch</option>
+            <option value="hi">Hindi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shortcuts Reference -->
+    <div class="shortcuts-bar">
+      <div class="shortcut"><kbd>Alt+A</kbd> Toggle</div>
+      <div class="shortcut"><kbd>Alt+S</kbd> Describe</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>AccessBot v2.0</span>
+      <span class="footer-badge">Gemini Live</span>
+    </footer>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/accessbot:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/accessbot:latest'
+      - './backend'
+
+  # Push the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/accessbot:$COMMIT_SHA'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/accessbot:latest'
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'accessbot'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/accessbot:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
+      - '--timeout'
+      - '3600'
+      - '--session-affinity'
+      - '--concurrency'
+      - '100'
+      - '--set-env-vars'
+      - 'GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE'
+
+images:
+  - 'gcr.io/$PROJECT_ID/accessbot:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/accessbot:latest'

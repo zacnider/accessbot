@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "name": "AccessBot - Voice Web Navigator",
+  "version": "1.0.0",
+  "description": "AI-powered accessibility assistant that helps visually impaired users navigate the web using voice commands and screen analysis.",
+  "minimum_chrome_version": "116",
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "offscreen",
+    "storage",
+    "sidePanel"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+
+  "action": {
+    "default_title": "AccessBot - Voice Web Navigator",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "commands": {
+    "toggle-accessbot": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Alt+A"
+      },
+      "description": "Toggle AccessBot on/off"
+    },
+    "describe-page": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Describe current page"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
