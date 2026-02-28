@@ -53,86 +53,72 @@ Gemini 2.0 Flash Live API
 
 ## Prerequisites
 
-- Python 3.11+
-- Google Cloud account with billing enabled
-- Google API Key (Gemini API) or Vertex AI access
 - Chrome browser (version 116+)
+- A free Gemini API key from [AI Studio](https://aistudio.google.com/apikey)
 
-## Setup & Installation
+## Reproducible Testing Instructions
 
-### 1. Clone the Repository
+### Step 1: Get a Gemini API Key
 
-```bash
-git clone https://github.com/YOUR_USERNAME/accessbot.git
-cd accessbot
-```
+1. Go to [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Sign in with your Google account
+3. Click "Create API Key"
+4. Copy the generated key
 
-### 2. Backend Setup
+### Step 2: Install the Chrome Extension
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/zacnider/accessbot.git
+   cd accessbot
+   ```
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable **"Developer mode"** (top right toggle)
+4. Click **"Load unpacked"**
+5. Select the `extension/` folder from this project
+6. The AccessBot icon will appear in your toolbar
+
+### Step 3: Configure and Start
+
+1. Click the AccessBot icon to open the Side Panel
+2. Paste your **Gemini API Key** in the Settings section
+3. Choose your preferred **language** and **speech rate**
+4. Click **"Start AccessBot"** or press `Alt+A`
+5. Grant **microphone permission** when prompted
+
+### Step 4: Test the Features
+
+Try these voice commands on any webpage:
+
+| Test | What to Say | Expected Result |
+|------|------------|-----------------|
+| Page Description | "What's on this page?" | AI describes the visible content |
+| Read Content | "Read the main text" | AI reads the page text aloud |
+| Click Element | "Click the search button" | AI finds and clicks the element |
+| Navigate | "Go to wikipedia.org" | Browser navigates to the URL |
+| Scroll | "Scroll down" | Page scrolls down |
+| Tab Management | "What tabs do I have open?" | AI lists all open tabs |
+| Form Fill | "Type hello in the search box" | AI types text into the field |
+
+You can also use the **quick action buttons** in the Side Panel:
+- **Describe** - Captures and describes the current page
+- **Read** - Reads all text content on the page
+- **Elements** - Lists all interactive elements (buttons, links, inputs)
+- **Tabs** - Shows all open browser tabs
+
+### Step 5: Run Backend Locally (Optional)
+
+The extension connects to our hosted Cloud Run backend by default. To run locally:
 
 ```bash
 cd backend
-
-# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Configure environment
-cp ../.env.example .env
-# Edit .env and add your GOOGLE_API_KEY
-```
-
-### 3. Run Backend Locally
-
-```bash
-cd backend
 uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
-The backend will be available at `ws://localhost:8080/ws`
-
-### 4. Install Chrome Extension
-
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" (top right toggle)
-3. Click "Load unpacked"
-4. Select the `extension/` directory from this project
-5. The AccessBot icon will appear in your toolbar
-
-### 5. Connect and Use
-
-1. Click the AccessBot icon in Chrome toolbar
-2. Ensure the backend URL is set to `ws://localhost:8080/ws`
-3. Click "Start AccessBot" or press `Alt+A`
-4. Grant microphone permission when prompted
-5. Start speaking! Try "What's on this page?" or "Click the first link"
-
-## Cloud Deployment
-
-### Deploy to Google Cloud Run
-
-```bash
-cd backend
-
-# Set your project ID
-export GOOGLE_CLOUD_PROJECT=your-project-id
-
-# Deploy
-./deploy.sh
-```
-
-After deployment, update the backend URL in the extension settings to the Cloud Run service URL.
-
-### Infrastructure as Code (Terraform)
-
-```bash
-cd infra/terraform
-terraform init
-terraform plan -var="project_id=your-project-id"
-terraform apply -var="project_id=your-project-id"
-```
+Then update `BACKEND_URL` in `extension/service-worker.js` to `ws://localhost:8080/ws`.
 
 ## Voice Commands (Examples)
 
@@ -163,20 +149,15 @@ accessbot/
 │   ├── manifest.json
 │   ├── service-worker.js   # WebSocket, screenshots, audio routing
 │   ├── content-script.js   # DOM actions & page analysis
-│   ├── popup/              # Extension popup UI
+│   ├── sidepanel/          # Side Panel UI (settings, transcript)
 │   ├── offscreen/          # Audio capture & playback
 │   ├── utils/              # WebSocket manager, audio processor
 │   └── icons/
-├── backend/                # Python Backend
-│   ├── main.py             # FastAPI + WebSocket endpoint
-│   ├── agent.py            # ADK Agent definition
-│   ├── tools/              # Browser action & page analysis tools
-│   ├── config.py           # Environment configuration
+├── backend/                # Python Backend (Cloud Run)
+│   ├── main.py             # FastAPI + WebSocket + ADK Agent
 │   ├── Dockerfile
-│   └── deploy.sh           # Cloud Run deployment script
-├── infra/                  # Infrastructure as Code
-│   └── terraform/
-└── docs/                   # Architecture diagrams & docs
+│   └── requirements.txt
+└── README.md
 ```
 
 ## Technologies Used
