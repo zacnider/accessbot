@@ -25,27 +25,7 @@ AccessBot is an AI-powered Chrome extension that helps visually impaired users n
 
 ## Architecture
 
-```
-Chrome Extension (Frontend)
-  |-- Service Worker (WebSocket + Screenshot 1FPS + Audio stream)
-  |-- Content Script (DOM actions: click, scroll, type, navigate)
-  |-- Offscreen Document (Microphone capture + Audio playback)
-  |
-  | WebSocket (audio PCM 16kHz + screenshots JPEG + action results)
-  v
-Python Backend (FastAPI + Google ADK) -- Google Cloud Run
-  |-- ADK Runner + Agent (bidi-streaming)
-  |-- LiveRequestQueue (audio + image blobs)
-  |-- Tool definitions (click, scroll, type, navigate, page analysis)
-  |
-  | ADK run_live()
-  v
-Gemini 2.0 Flash Live API
-  |-- Real-time screenshot analysis
-  |-- Voice input/output (natural conversation)
-  |-- Function calling (browser action commands)
-  |-- VAD + Barge-in (interruption handling)
-```
+![AccessBot Architecture](architecture.png)
 
 ## Tech Stack
 
