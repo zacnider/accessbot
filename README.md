@@ -6,11 +6,13 @@ AccessBot is an AI-powered Chrome extension that helps visually impaired users n
 
 [![Demo Video](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube)](https://youtu.be/kmcgGyhLm-g)
 [![Cloud Run Logs](https://img.shields.io/badge/Cloud%20Run%20Logs-YouTube-blue?logo=googlecloud)](https://youtu.be/0i6l4O46co8)
+[![Blog Post](https://img.shields.io/badge/Blog-Medium-black?logo=medium)](https://medium.com/p/5e9b5e5b4c87)
 
 ## Demo
 
 - **Demo Video:** [https://youtu.be/kmcgGyhLm-g](https://youtu.be/kmcgGyhLm-g)
 - **Google Cloud Run Deployment Logs:** [https://youtu.be/0i6l4O46co8](https://youtu.be/0i6l4O46co8)
+- **Blog Post:** [How I Built AccessBot](https://medium.com/p/5e9b5e5b4c87)
 
 ## Features
 
