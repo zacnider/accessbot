@@ -4,6 +4,14 @@ AccessBot is an AI-powered Chrome extension that helps visually impaired users n
 
 **Category:** UI Navigator | **Hackathon:** Gemini Live Agent Challenge
 
+[![Demo Video](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube)](https://youtu.be/kmcgGyhLm-g)
+[![Cloud Run Logs](https://img.shields.io/badge/Cloud%20Run%20Logs-YouTube-blue?logo=googlecloud)](https://youtu.be/0i6l4O46co8)
+
+## Demo
+
+- **Demo Video:** [https://youtu.be/kmcgGyhLm-g](https://youtu.be/kmcgGyhLm-g)
+- **Google Cloud Run Deployment Logs:** [https://youtu.be/0i6l4O46co8](https://youtu.be/0i6l4O46co8)
+
 ## Features
 
 - **Voice Navigation** - Speak naturally to browse the web. "Go to Google", "Click the search button", "Scroll down"
